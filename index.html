@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <title>Guess-My-Number</title>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+
+      <div class="wrapper">
+        <h1 class="txt-white mb-2 ft-large txt-center">Guess My Number!</h1>
+        <h2 class="txt-white title mb-2">How to play?</h2>
+        <div class="rule-box">
+          <p>
+            The game consists of trying to guess the hidden number between 1 and 20 in the fewest possible attempts. To
+            achieve this, it consists of 10 attempts, the less we spend, the higher our final score. You can always try
+            again. Good luck! 🤟
+          </p>
+        </div>
+        <button data-content="New Game"></button>
+      </div>
+
+      <div class="wrapper">
+        <div class="endgame-number-container">
+          <div class="endgame-number-wrapper">
+            <p class="endgame-number-txt">?</p>
+          </div>
+        </div>
+        <p class="message">
+          <span>Start guessing...</span>
+        </p>
+        <div class="play-area">
+          <input type="number" min="1" max="20">
+          <button>Check!</button>
+        </div>
+        <div class="result-wrapper">
+          <ul class="hp-wrapper">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+          <p class="result-wrapper-best-score">
+            Best Score:
+            <span>0</span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <script src="./app.js"></script>
+</body>
+
+</html>
