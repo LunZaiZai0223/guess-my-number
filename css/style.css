@@ -1,0 +1,229 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Press Start 2P", cursive;
+  background-color: #252930;
+}
+
+section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.txt-white {
+  color: #eee;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+.ft-large {
+  font-size: 2rem;
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
+.container {
+  max-width: 95%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.rule-box {
+  background-color: #e3e6e0;
+  padding: 0.5rem 0.75rem;
+  line-height: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.title:before {
+  content: "";
+  width: 1px;
+  height: 8rem;
+  background-color: white;
+}
+
+button {
+  padding: 1.5rem 4rem;
+  background-color: #6b8490;
+  border: 2px solid #6b8490;
+  border-radius: 0.5rem;
+  position: relative;
+  cursor: pointer;
+  width: 40%;
+  margin-top: 1rem;
+}
+button:hover {
+  border: none;
+}
+button:hover:before {
+  transform: translate(0);
+}
+button:before {
+  content: attr(data-content);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #eee;
+  background-color: #c0b3a0;
+  border-radius: 0.5rem;
+  border: 3px solid #6b8490;
+  transform: translate(-0.5rem, -0.5rem);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-family: "Press Start 2P", cursive;
+}
+
+.endgame-number-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.endgame-number-container:before, .endgame-number-container:after {
+  content: "";
+  height: 1px;
+  width: 8rem;
+  background-color: white;
+}
+
+.endgame-number-wrapper {
+  background-color: #e3e6e0;
+  padding: 2rem 2rem 2rem 2.5rem;
+  border-radius: 0.5rem;
+}
+.endgame-number-wrapper .endgame-number-txt {
+  font-size: 5rem;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  gap: 2rem;
+  color: white;
+  font-size: 1.25rem;
+}
+.message:before {
+  content: "";
+  width: 1px;
+  height: 8rem;
+  background-color: white;
+}
+
+.message.is-correct {
+  color: #FEDE00;
+}
+
+.message.is-incorrect {
+  color: #E7625F;
+}
+
+.play-area {
+  margin: 10% 0;
+  display: flex;
+  gap: 1rem;
+}
+.play-area input {
+  width: 50%;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  outline: none;
+  font-family: "Press Start 2P", cursive;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #444444;
+  margin: 5px;
+  padding: 1rem;
+}
+.play-area button {
+  width: 50%;
+  padding: 1.5rem 5rem;
+  margin: 5px;
+}
+.play-area button:before {
+  content: attr(data-button-content);
+}
+
+.result-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.result-wrapper .hp-wrapper {
+  display: flex;
+  gap: 5px;
+  padding: 0.5rem;
+  border: 1px solid white;
+  border-radius: 0.3rem;
+}
+.result-wrapper .hp-wrapper li {
+  list-style: none;
+  display: inline-block;
+  background-color: #0A7029;
+  transition: background-color 1s;
+  width: 10px;
+  height: 35px;
+  border-radius: 0.2rem;
+}
+.result-wrapper .hp-wrapper li:nth-of-type(1), .result-wrapper .hp-wrapper li:nth-of-type(2), .result-wrapper .hp-wrapper li:nth-of-type(3) {
+  background-color: Red;
+}
+.result-wrapper .hp-wrapper li:nth-of-type(4), .result-wrapper .hp-wrapper li:nth-of-type(5), .result-wrapper .hp-wrapper li:nth-of-type(6), .result-wrapper .hp-wrapper li:nth-of-type(7) {
+  background-color: #8BCD50;
+}
+.result-wrapper .hp-wrapper .remove-hp {
+  background-color: white;
+}
+.result-wrapper .result-wrapper-best-score {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: white;
+}
+.result-wrapper .result-wrapper-best-score span {
+  text-align: center;
+  color: #FEDE00;
+}
+
+/*# sourceMappingURL=style.css.map */
