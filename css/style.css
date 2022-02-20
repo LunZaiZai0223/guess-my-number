@@ -213,7 +213,7 @@ button:before {
   background-color: #8BCD50;
 }
 .result-wrapper .hp-wrapper .remove-hp {
-  background-color: white;
+  background-color: White !important;
 }
 .result-wrapper .result-wrapper-best-score {
   display: flex;
@@ -224,6 +224,19 @@ button:before {
 .result-wrapper .result-wrapper-best-score span {
   text-align: center;
   color: #FEDE00;
+}
+
+.hp-blinking {
+  animation: blinking 1s infinite;
+}
+
+@keyframes blinking {
+  0%, 49% {
+    background-color: Red;
+  }
+  50%, 100% {
+    background-color: White;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
