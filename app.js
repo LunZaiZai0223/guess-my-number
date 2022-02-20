@@ -1,10 +1,14 @@
 const inputEle = document.querySelector('input');
 const checkButton = document.querySelector("[data-button-content='Check!']");
 
+const userInfo = {
+  currentHp: 10,
+  bestScore: 0
+};
+
 const getEndGameNumber = () => {
   return Math.floor(Math.random() * 20) + 1;
 };
-
 
 const checkIsInvalidNumber = (inputValue) => {
   return Number(inputValue) > 20 || Number(inputValue) <= 0;
@@ -18,31 +22,41 @@ const changeInputValue = (inputValue, eventOwner) => {
   }
 }
 
-const getInputValueResult = (inputValue, endGameNumber) => {
+// 控制猜對猜錯
+const checkNumberIsCorrect = (inputValue, endGameNumber) => {
+  const messageEle = document.querySelector('.message span');
+  const messageWrapper = messageEle.parentElement;
+
   if (Number(inputValue) === endGameNumber) {
-    return { result: 'correct' };
+    showIsCorrectMessage(messageEle, messageWrapper);
   } else if (Number(inputValue) > endGameNumber) {
-    return { result: 'to high' };
+    showIsToHighMessage(messageEle, messageWrapper);
   } else if (Number(inputValue) < endGameNumber) {
-    return { result: 'to low' };
+    showIsToLowMessage(messageEle, messageWrapper);
   }
 };
 
-const changeMessage = ({ result }) => {
+const showIsToHighMessage = (messageEle, messageWrapper) => {
+  messageEle.textContent = 'To high!';
+  messageWrapper.classList.add('is-incorrect');
+};
+
+const showIsToLowMessage = (messageEle, messageWrapper) => {
+  messageEle.textContent = 'To Low!';
+  messageWrapper.classList.add('is-incorrect');
+};
+
+const showIsCorrectMessage = (messageEle, messageWrapper) => {
+  messageEle.textContent = "Good Job! It's correct!";
+  messageWrapper.classList.add('is-correct');
+};
+
+const messageDefault = (inputValue) => {
   const messageEle = document.querySelector('.message span');
   const messageWrapper = messageEle.parentElement;
-  console.log(result);
-  messageWrapper.classList.remove('is-correct', 'is-incorrect');
-
-  if (result === 'correct') {
-    messageEle.textContent = "Good Job! It's correct!";
-    messageWrapper.classList.add('is-correct');
-  } else if (result === 'to high') {
-    messageEle.textContent = 'To high!';
-    messageWrapper.classList.add('is-incorrect');
-  } else if (result === 'to low') {
-    messageEle.textContent = 'To low!';
-    messageWrapper.classList.add('is-incorrect');
+  if (inputValue === '') {
+    messageWrapper.classList.remove('is-correct', 'is-incorrect');
+    messageEle.textContent = 'Start guessing...';
   }
 };
 
@@ -51,6 +65,7 @@ const handleInput = (event) => {
   const eventOwner = event.currentTarget;
   const inputValue = event.target.value;
   changeInputValue(inputValue, eventOwner);
+  messageDefault(inputValue);
 };
 
 const handleKeydown = (event) => {
@@ -59,12 +74,14 @@ const handleKeydown = (event) => {
   if (invalidKeys.includes(key)) {
     event.preventDefault();
   }
+  if (key === 'Enter' && inputEle.value !== '') {
+    checkNumberIsCorrect(inputEle.value, endGameNumber);
+  }
 };
 
 const handleClick = () => {
   const inputValue = inputEle.value;
-  const result = getInputValueResult(inputValue, endGameNumber);
-  changeMessage(result);
+  checkNumberIsCorrect(inputValue, endGameNumber);
 };
 
 const endGameNumber = getEndGameNumber();
@@ -82,9 +99,9 @@ checkButton.addEventListener('click', handleClick);
 // remove hp class => remove-hp
 
 // Todo:
-//   1. Guess my number title 跑馬燈
-//   2. input enter 也可以觸發檢查
-//   3. 檢查完回到打字的時候 message 回去 default
+//   1. Guess my number title 跑馬燈 --> NO
+//   2. input enter 也可以觸發檢查 --> OK
+//   3. 檢查完回到打字的時候 message 回去 default -> OK
 //   4. 失敗時 - hp
 //   5. 結束
 //        a. 成功 -> 變顏色，顯示次數，如最高記錄
