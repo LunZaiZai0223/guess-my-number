@@ -1,7 +1,11 @@
 const inputEle = document.querySelector('input');
 const checkButton = document.querySelector("[data-button-content='Check!']");
+const hpWrapper = document.querySelector('.hp-wrapper');
 
-const userInfo = {
+// console.log(hpWrapper.children[hpWrapper.children.length - 1].classList.add('remove-hp'));
+
+const playerInfo = {
+  step: 0,
   currentHp: 10,
   bestScore: 0
 };
@@ -29,10 +33,19 @@ const checkNumberIsCorrect = (inputValue, endGameNumber) => {
 
   if (Number(inputValue) === endGameNumber) {
     showIsCorrectMessage(messageEle, messageWrapper);
+    isGameOver();
   } else if (Number(inputValue) > endGameNumber) {
     showIsToHighMessage(messageEle, messageWrapper);
+    changePlayerInfo();
+    checkPlayerInfo();
+    changeHpDisplay();
+    addHpBlinkingClass();
   } else if (Number(inputValue) < endGameNumber) {
     showIsToLowMessage(messageEle, messageWrapper);
+    changePlayerInfo();
+    checkPlayerInfo();
+    changeHpDisplay();
+    addHpBlinkingClass();
   }
 };
 
@@ -49,6 +62,41 @@ const showIsToLowMessage = (messageEle, messageWrapper) => {
 const showIsCorrectMessage = (messageEle, messageWrapper) => {
   messageEle.textContent = "Good Job! It's correct!";
   messageWrapper.classList.add('is-correct');
+};
+
+const changeHpDisplay = () => {
+  console.log(playerInfo);
+  if (playerInfo.currentHp >= 0) {
+    hpWrapper.children[hpWrapper.children.length - [playerInfo.step]].classList.remove('hp-blinking');
+    hpWrapper.children[playerInfo.currentHp].classList.add('remove-hp');
+  }
+};
+
+const addHpBlinkingClass = () => {
+  if (playerInfo.step >= 7 && playerInfo.step <= 9) {
+    console.log('12312');
+    hpWrapper.children[playerInfo.currentHp - 1].classList.add('hp-blinking');
+  }
+};
+
+const changePlayerInfo = () => {
+  playerInfo.step ++;
+  playerInfo.currentHp --;
+};
+
+const checkPlayerInfo = () => {
+  console.log('123123');
+  if (playerInfo.currentHp === 0) {
+    isGameOver();
+    console.log('remove events');
+  }
+};
+
+const isGameOver = () => {
+  // inputEle.removeEventListener('input', handleInput);
+  // inputEle.removeEventListener('keydown', handleKeydown);
+  inputEle.setAttribute('readonly', true);
+  checkButton.removeEventListener('click', handleClick);
 };
 
 const messageDefault = (inputValue) => {
@@ -102,9 +150,10 @@ checkButton.addEventListener('click', handleClick);
 //   1. Guess my number title 跑馬燈 --> NO
 //   2. input enter 也可以觸發檢查 --> OK
 //   3. 檢查完回到打字的時候 message 回去 default -> OK
-//   4. 失敗時 - hp
+//   4. 失敗時 - hp -> OK
 //   5. 結束
 //        a. 成功 -> 變顏色，顯示次數，如最高記錄
 //        b. 失敗 -> popup: you are dead
 //      ----> 都不能再玩了，除非按下 new game
 //   6. rwd
+//   7. 猜對時記錄次數並且比對
