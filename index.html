@@ -5,12 +5,20 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
   <title>Guess-My-Number</title>
 </head>
 
 <body>
+  <div class="overlay">
+    <div class="modal">
+      <h2>You died!</h2>
+      <p>Best Scroe: <span data-best-score>0</span></p>
+      <p class="cross">&#10013</p>
+      <div class="modal-button" data-start-new-game>Start New Game</div>
+    </div>
+  </div>
   <section>
     <div class="container">
 
@@ -24,7 +32,7 @@
             again. Good luck! 🤟
           </p>
         </div>
-        <button data-content="New Game"></button>
+        <button data-content="New Game" data-start-new-game></button>
       </div>
 
       <div class="wrapper">
@@ -55,7 +63,7 @@
           </ul>
           <p class="result-wrapper-best-score">
           Best Score:
-          <span>0</span>
+          <span data-best-score>0</span>
           </p>
         </div>
       </div>

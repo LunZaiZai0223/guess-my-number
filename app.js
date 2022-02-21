@@ -1,8 +1,59 @@
 const inputEle = document.querySelector('input');
 const checkButton = document.querySelector("[data-button-content='Check!']");
 const hpWrapper = document.querySelector('.hp-wrapper');
+const overlay = document.querySelector('.overlay');
+const startNewGameButtons = document.querySelectorAll('[data-start-new-game]');
+const endgameNumberWrapper = document.querySelector('.endgame-number-wrapper');
 
-// console.log(hpWrapper.children[hpWrapper.children.length - 1].classList.add('remove-hp'));
+startNewGameButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    console.log('hit me!');
+    initialize();
+  });
+});
+
+const initializePlayerInfo = () => {
+  playerInfo.step = 0;
+  playerInfo.currentHp = 10;
+};
+
+const initializeEedgameNumber = () => {
+  endGameNumber = getEndGameNumber();
+  console.log('new number:', endGameNumber);
+};
+
+const initializeEedgameNumberStyle = () => {
+  endgameNumberWrapper.classList.remove('is-correct');
+  endgameNumberWrapper.children[0].textContent = '?';
+};
+
+const addClickEventBack = () => {
+  inputEle.removeAttribute('readonly');
+  checkButton.addEventListener('click', handleClick);
+};
+
+const initialize = () => {
+  initializePlayerInfo();
+  hideOverlay();
+  initializeHp();
+  initializeEedgameNumber();
+  messageDefault();
+  if (inputEle.getAttribute('readonly')) {
+    addClickEventBack();
+  }
+  initializeInputValue();
+  initializeEedgameNumberStyle();
+};
+
+const initializeHp = () => {
+  [...hpWrapper.children].forEach((hp) => {
+    hp.classList.remove('remove-hp', 'hp-blinking');
+  });
+};
+
+const initializeInputValue = () => {
+  inputEle.value = '';
+}
 
 const playerInfo = {
   step: 0,
@@ -34,6 +85,11 @@ const checkNumberIsCorrect = (inputValue, endGameNumber) => {
   if (Number(inputValue) === endGameNumber) {
     showIsCorrectMessage(messageEle, messageWrapper);
     isGameOver();
+    displayWinMode();
+    const needChangeBestScore = checkCurrentHp();
+    if (needChangeBestScore) {
+      updateBestScore();
+    }
   } else if (Number(inputValue) > endGameNumber) {
     showIsToHighMessage(messageEle, messageWrapper);
     changePlayerInfo();
@@ -50,12 +106,12 @@ const checkNumberIsCorrect = (inputValue, endGameNumber) => {
 };
 
 const showIsToHighMessage = (messageEle, messageWrapper) => {
-  messageEle.textContent = 'To high!';
+  messageEle.textContent = 'Too high!';
   messageWrapper.classList.add('is-incorrect');
 };
 
 const showIsToLowMessage = (messageEle, messageWrapper) => {
-  messageEle.textContent = 'To Low!';
+  messageEle.textContent = 'Too Low!';
   messageWrapper.classList.add('is-incorrect');
 };
 
@@ -65,7 +121,6 @@ const showIsCorrectMessage = (messageEle, messageWrapper) => {
 };
 
 const changeHpDisplay = () => {
-  console.log(playerInfo);
   if (playerInfo.currentHp >= 0) {
     hpWrapper.children[hpWrapper.children.length - [playerInfo.step]].classList.remove('hp-blinking');
     hpWrapper.children[playerInfo.currentHp].classList.add('remove-hp');
@@ -88,8 +143,17 @@ const checkPlayerInfo = () => {
   console.log('123123');
   if (playerInfo.currentHp === 0) {
     isGameOver();
+    displayOverlay();
     console.log('remove events');
   }
+};
+
+const displayOverlay = () => {
+  overlay.classList.add('is-active');
+};
+
+const hideOverlay = () => {
+  overlay.classList.remove('is-active');
 };
 
 const isGameOver = () => {
@@ -99,13 +163,29 @@ const isGameOver = () => {
   checkButton.removeEventListener('click', handleClick);
 };
 
-const messageDefault = (inputValue) => {
+const messageDefault = () => {
   const messageEle = document.querySelector('.message span');
   const messageWrapper = messageEle.parentElement;
-  if (inputValue === '') {
-    messageWrapper.classList.remove('is-correct', 'is-incorrect');
-    messageEle.textContent = 'Start guessing...';
-  }
+  messageWrapper.classList.remove('is-correct', 'is-incorrect');
+  messageEle.textContent = 'Start guessing...';
+};
+
+const displayWinMode = () => {
+  endgameNumberWrapper.classList.add('is-correct');
+  endgameNumberWrapper.children[0].textContent = endGameNumber;
+};
+
+const checkCurrentHp = () => {
+  console.log(playerInfo.step);
+  return playerInfo.currentHp > playerInfo.bestScore;
+};
+
+const updateBestScore = () => {
+  playerInfo.bestScore = playerInfo.currentHp;
+  const spans = document.querySelectorAll('[data-best-score]');
+  spans.forEach((span) => {
+    span.textContent = playerInfo.bestScore;
+  });
 };
 
 // events
@@ -113,7 +193,9 @@ const handleInput = (event) => {
   const eventOwner = event.currentTarget;
   const inputValue = event.target.value;
   changeInputValue(inputValue, eventOwner);
-  messageDefault(inputValue);
+  if (inputValue === '') {
+    messageDefault(inputValue);
+  }
 };
 
 const handleKeydown = (event) => {
@@ -132,7 +214,7 @@ const handleClick = () => {
   checkNumberIsCorrect(inputValue, endGameNumber);
 };
 
-const endGameNumber = getEndGameNumber();
+let endGameNumber = getEndGameNumber();
 
 console.log(endGameNumber);
 
